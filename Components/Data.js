@@ -1,6 +1,6 @@
-import React from 'react';
+import useTaskActions from '../hooks/useTaskActions';
 
-function Data({ data, completed }) {
+const Data = ({ data, completed }) => {
   let stylesCompleted = {
     textDecoration: 'line-through',
   };
@@ -9,13 +9,15 @@ function Data({ data, completed }) {
     textDecoration: 'none',
   };
 
+  const { taskComplet, finishTask, deleteTask, removeTask } =
+    useTaskActions(completed);
+
   return (
-    <div className="div">
-      <p style={completed ? stylesCompleted : stylesNotCompleted}>{data}</p>
-      <button>DONE</button>
-      <button>REMOVE</button>
+    <div className={deleteTask ? 'remove div' : 'div'}>
+      <p style={taskComplet ? stylesCompleted : stylesNotCompleted}>{data}</p>
+      <button onClick={finishTask}>DONE</button>
+      <button onClick={removeTask}>REMOVE</button>
     </div>
   );
-}
-
+};
 export default Data;

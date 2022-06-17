@@ -30,3 +30,7 @@ a {
   align-items: center;
   background-color: #333;
 }
+
+.remove {
+  display: none;
+}

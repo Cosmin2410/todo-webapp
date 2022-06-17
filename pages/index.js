@@ -1,8 +1,5 @@
-import Head from 'next/head';
-import Image from 'next/image';
-import styles from '../styles/Home.module.css';
 import Data from '../Components/Data';
-import Link from 'next/link';
+import Form from '../Components/Form';
 import React from 'react';
 
 class Index extends React.Component {
@@ -11,7 +8,7 @@ class Index extends React.Component {
     path = path.substring(path.indexOf('=') + 1);
 
     const response = await fetch(
-      `https://jsonplaceholder.typicode.com/posts?userId=${path}`
+      `https://jsonplaceholder.typicode.com/todos/?userId=${path}`
     );
 
     const data = await response.json();
@@ -27,8 +24,10 @@ class Index extends React.Component {
 
   render() {
     const { data, allUsersData, path } = this.props;
+
     return (
       <>
+        <Form />
         {path === '/'
           ? allUsersData.map((usersData) => {
               return (
