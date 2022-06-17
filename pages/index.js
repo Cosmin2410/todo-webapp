@@ -3,64 +3,57 @@ import Image from 'next/image';
 import styles from '../styles/Home.module.css';
 import Data from '../Components/Data';
 import Link from 'next/link';
-import { useState } from 'react';
+import React from 'react';
 
-export const getStaticProps = async () => {
-  const response = await fetch('https://jsonplaceholder.typicode.com/todos');
-  const data = await response.json();
-  return {
-    props: { todoData: data },
-  };
-};
+class Index extends React.Component {
+  static async getInitialProps(context) {
+    let path = context.asPath;
+    path = path.substring(path.indexOf('=') + 1);
 
-export default function Home({ todoData }) {
-  // const [objData, setObjData] = useState({});
+    const response = await fetch(
+      `https://jsonplaceholder.typicode.com/posts?userId=${path}`
+    );
 
-  // const usersData = todoData.map((userData) => {
-  //   const userObj = {
-  //     userId: userData.userId,
-  //   };
+    const data = await response.json();
 
-  //   console.log(userObj);
-  // });
+    const allUsersResponse = await fetch(
+      `https://jsonplaceholder.typicode.com/todos`
+    );
 
-  // console.log(objData);
+    const allUsersData = await allUsersResponse.json();
 
-  const filterData = (id) => {
-    todoData.map((usersData) => {
-      console.log(usersData);
-      // datas.filter((userData) => userData !== id);
+    return { data, allUsersData, path };
+  }
 
-      // usersData.filter((userData) => userData !== id);
-    });
-
-    console.log(id);
-  };
-
-  return (
-    <>
-      <div>
-        <input type="text" />
-        <button>Add Task</button>
-      </div>
-      <div>
-        {todoData.map((allData) => {
-          return (
-            <Link key={allData.id} href={`/?userId=${allData.id}`}>
-              {/* <Data data={allData.title} /> */}
-              <div
-                onClick={() => filterData(allData.userId, allData)}
-                style={{ pointerEvents: 'none' }}
-              >
-                {allData.title}
-              </div>
-            </Link>
-          );
-        })}
-      </div>
-    </>
-  );
+  render() {
+    const { data, allUsersData, path } = this.props;
+    return (
+      <>
+        {path === '/'
+          ? allUsersData.map((usersData) => {
+              return (
+                <Data
+                  key={usersData.id}
+                  data={usersData.title}
+                  completed={usersData.completed}
+                />
+              );
+            })
+          : data.map((allData) => {
+              return (
+                <Data
+                  key={allData.id}
+                  data={allData.title}
+                  completed={allData.completed}
+                />
+              );
+            })}
+      </>
+    );
+  }
 }
+
+export default Index;
 
 // npm i node
 // npm install redux react-redux @reduxjs/toolkit next-redux-wrapper --save

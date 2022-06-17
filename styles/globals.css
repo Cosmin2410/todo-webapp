@@ -21,3 +21,12 @@ a {
 * {
   box-sizing: border-box;
 }
+/* 
+
+*/
+.div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #333;
+}
