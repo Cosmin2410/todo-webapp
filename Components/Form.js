@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import TaskItems from './TaskItems';
+import useCustomActions from '../hooks/useCustomActions';
+import { FormStyle } from './styles/Form.styled';
 
 function Form() {
   const [formData, setFormData] = useState({
@@ -8,7 +10,8 @@ function Form() {
     completed: false,
   });
 
-  const [inputValue, setInputValue] = useState([]);
+  const [inputValue, setInputValue, completeTask, deleteTask] =
+    useCustomActions();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,7 +26,6 @@ function Form() {
 
   const getDataBtn = () => {
     setInputValue([...inputValue, formData]);
-
     setFormData((prevFormData) => {
       return { ...prevFormData, title: '' };
     });
@@ -31,16 +33,30 @@ function Form() {
 
   return (
     <div>
-      <input
-        type="field"
-        onChange={handleChange}
-        name="title"
-        value={formData.title}
-      />
-      <button onClick={getDataBtn}>Add Task</button>
+      <FormStyle>
+        <input
+          type="field"
+          name="title"
+          value={formData.title}
+          onChange={handleChange}
+          onKeyPress={(e) => {
+            if (e.key === 'Enter') {
+              getDataBtn();
+            }
+          }}
+        />
+        <button onClick={getDataBtn}>Add Task</button>
+      </FormStyle>
       <div>
         {inputValue.map((task) => {
-          return <TaskItems key={task.id} task={task} />;
+          return (
+            <TaskItems
+              key={task.id}
+              task={task}
+              completeTask={completeTask}
+              deleteTask={deleteTask}
+            />
+          );
         })}
       </div>
     </div>

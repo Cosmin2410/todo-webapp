@@ -1,23 +1,25 @@
 import useTaskActions from '../hooks/useTaskActions';
+import { Task } from './styles/Task.styled';
+import { TaskDone } from './styles/Task.styled';
+import { Buttons } from './styles/Buttons.styled';
 
 const Data = ({ data, completed }) => {
-  let stylesCompleted = {
-    textDecoration: 'line-through',
-  };
-
-  let stylesNotCompleted = {
-    textDecoration: 'none',
-  };
-
   const { taskComplet, finishTask, deleteTask, removeTask } =
     useTaskActions(completed);
 
   return (
-    <div className={deleteTask ? 'remove div' : 'div'}>
-      <button onClick={finishTask}>DONE</button>
-      <p style={taskComplet ? stylesCompleted : stylesNotCompleted}>{data}</p>
-      <button onClick={removeTask}>REMOVE</button>
-    </div>
+    <Task remove={deleteTask ? 'none' : 'flex'}>
+      <Buttons onClick={finishTask}>DONE</Buttons>
+
+      <TaskDone
+        complet={taskComplet ? 'line-through' : 'none'}
+        opacity={taskComplet ? '0.3' : '1'}
+      >
+        {data}
+      </TaskDone>
+
+      <Buttons onClick={removeTask}>REMOVE</Buttons>
+    </Task>
   );
 };
 export default Data;

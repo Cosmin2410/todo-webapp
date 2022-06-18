@@ -1,6 +1,8 @@
 import Data from '../Components/Data';
 import Form from '../Components/Form';
 import React from 'react';
+import { GlobalStyles } from '../Components/styles/Global';
+import IndexStyled from '../Components/styles/Index.styled';
 
 class Index extends React.Component {
   static async getInitialProps(context) {
@@ -26,7 +28,8 @@ class Index extends React.Component {
     const { data, allUsersData, path } = this.props;
 
     return (
-      <>
+      <IndexStyled>
+        <GlobalStyles />
         <Form />
         {path === '/'
           ? allUsersData.map((usersData) => {
@@ -47,16 +50,15 @@ class Index extends React.Component {
                 />
               );
             })}
-      </>
+      </IndexStyled>
     );
   }
 }
 
 export default Index;
 
-// npm i node
+// npm install node
 // npm install redux react-redux @reduxjs/toolkit next-redux-wrapper --save
-
-// zi 1 api call from redux and useId pages
-// zi 2 customhook and styled components
-// zi 3
+// npm install uuid
+// npm install styled-components --save
+// npm install --save-dev babel-plugin-styled-components
