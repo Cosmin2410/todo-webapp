@@ -14,8 +14,8 @@ const Data = ({ data, completed }) => {
 
   return (
     <div className={deleteTask ? 'remove div' : 'div'}>
-      <p style={taskComplet ? stylesCompleted : stylesNotCompleted}>{data}</p>
       <button onClick={finishTask}>DONE</button>
+      <p style={taskComplet ? stylesCompleted : stylesNotCompleted}>{data}</p>
       <button onClick={removeTask}>REMOVE</button>
     </div>
   );
