@@ -68,9 +68,3 @@ class Index extends React.Component {
 }
 
 export default Index;
-
-// npm install node
-// npm install uuid
-// npm install styled-components --save
-// npm install --save-dev babel-plugin-styled-components
-// npm i --save-dev node uuid  babel-plugin-styled-components
