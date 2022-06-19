@@ -9,44 +9,56 @@ class Index extends React.Component {
     let path = context.asPath;
     path = path.substring(path.indexOf('=') + 1);
 
-    const response = await fetch(
-      `https://jsonplaceholder.typicode.com/todos/?userId=${path}`
-    );
+    let userTask;
+    let allTasks;
 
-    const data = await response.json();
+    try {
+      const res = await fetch(
+        `https://jsonplaceholder.typicode.com/todos/?userId=${path}`
+      );
 
-    const allUsersResponse = await fetch(
-      `https://jsonplaceholder.typicode.com/todos`
-    );
+      userTask = await res.json();
+    } catch (err) {
+      console.log(err);
+      userTask = [];
+    }
 
-    const allUsersData = await allUsersResponse.json();
+    try {
+      const response = await fetch(
+        `https://jsonplaceholder.typicode.com/todos`
+      );
+      allTasks = await response.json();
+    } catch (err) {
+      console.log(err);
+      allTasks = [];
+    }
 
-    return { data, allUsersData, path };
+    return { userTask, allTasks, path };
   }
 
   render() {
-    const { data, allUsersData, path } = this.props;
+    const { userTask, allTasks, path } = this.props;
 
     return (
       <IndexStyled>
         <GlobalStyles />
         <Form />
         {path === '/'
-          ? allUsersData.map((usersData) => {
+          ? allTasks.map((usersData) => {
               return (
                 <Data
                   key={usersData.id}
-                  data={usersData.title}
+                  task={usersData.title}
                   completed={usersData.completed}
                 />
               );
             })
-          : data.map((allData) => {
+          : userTask.map((userData) => {
               return (
                 <Data
-                  key={allData.id}
-                  data={allData.title}
-                  completed={allData.completed}
+                  key={userData.id}
+                  task={userData.title}
+                  completed={userData.completed}
                 />
               );
             })}
@@ -58,7 +70,7 @@ class Index extends React.Component {
 export default Index;
 
 // npm install node
-// npm install redux react-redux @reduxjs/toolkit next-redux-wrapper --save
 // npm install uuid
 // npm install styled-components --save
 // npm install --save-dev babel-plugin-styled-components
+// npm i --save-dev node uuid  babel-plugin-styled-components

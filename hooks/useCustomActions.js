@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
-const useCustomActions = (id) => {
+const useCustomActions = () => {
   const [inputValue, setInputValue] = useState([]);
 
   const completeTask = (id) => {

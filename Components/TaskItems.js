@@ -7,7 +7,10 @@ function TaskItems({ task, completeTask, deleteTask }) {
   return (
     <Task>
       <Buttons onClick={() => completeTask(task.id)}>Done</Buttons>
-      <TaskDone complet={task.completed ? 'line-through' : 'none'}>
+      <TaskDone
+        complet={task.completed ? 'line-through' : 'none'}
+        opacity={task.completed ? '0.3' : '1'}
+      >
         {task.title}
       </TaskDone>
       <Buttons onClick={() => deleteTask(task.id)}>Remove</Buttons>
@@ -16,4 +19,3 @@ function TaskItems({ task, completeTask, deleteTask }) {
 }
 
 export default TaskItems;
-// className={task.completed ? 'checked ' : ''}
